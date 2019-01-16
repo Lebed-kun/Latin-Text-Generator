@@ -1,0 +1,35 @@
+@media only screen and (max-width: 860px) {
+  input {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  #input-min-len, #input-max-len {
+  	margin: 0 0.5rem;
+  }
+
+  .input-inline {
+    margin: 0 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .input-container {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .input-inline {
+    margin-top: 1rem;
+  }
+
+  input {
+    width: 80%;
+    margin: 0.5rem auto;
+  }
+
+  select {
+    margin: 0.5rem 0;
+  }
+}

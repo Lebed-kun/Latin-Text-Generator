@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Random Latin Text Generator</title>
+    <link href="https://fonts.googleapis.com/css?family=Seaweed+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chewy" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
+    <link href="./css/media-queries.css" rel="stylesheet">
+  </head>
+  <body>
+    <form name="form-text-gen">
+      <div class="input-container">
+        <span class="label">Text length (up to 10K characters)</span>
+        <input id="input-text-len" type="text" maxlength="5">
+      </div>
+
+      <div class="input-container">
+        <div class="input-inline">
+          <span class="label">Minimum word length</span>
+          <input id="input-min-len" type="text" maxlength="2">
+        </div>
+        <div class="input-inline">
+          <span class="label">Maximum word length</span>
+          <input id="input-max-len" type="text" maxlength="2">
+        </div>
+      </div>
+
+      <div class="input-container">
+        <span class="label">Some option for each word</span>
+        <select id="select-option">
+          <option value="lowercase">lowercase</option>
+          <option value="camelize">Camelize</option>
+          <option value="uppercase">UPPERCASE</option>
+        </select>
+      </div>
+
+      <button id="button-gen-text" type="button">Generate text</button>
+      <textarea id="output-text" readonly>
+      </textarea>
+    </form>
+    <script src="script.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>
