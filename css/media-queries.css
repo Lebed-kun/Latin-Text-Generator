@@ -33,3 +33,33 @@
     margin: 0.5rem 0;
   }
 }
+
+@media only screen and (min-resolution: 150dpi) and (orientation: landscape) {
+  html {
+    font-size: 40px;
+  }
+}
+
+@media only screen and (min-resolution: 150dpi) and (orientation: portrait) {
+  html {
+    font-size: 40px;
+  }
+
+  .input-container {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .input-inline {
+    margin-top: 1rem;
+  }
+
+  input {
+    width: 80%;
+    margin: 0.5rem auto;
+  }
+
+  select {
+    margin: 0.5rem 0;
+  }
+}
