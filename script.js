@@ -3,10 +3,10 @@ function PropertyError(property) {
   this.name = "PropertyError";
   this.property = property;
   this.message = "Error in property " + property;
-  
+
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, this.constructor);
-  } 
+  }
   else {
     this.stack = (new Error()).stack;
   }
@@ -18,7 +18,7 @@ function ValueError(value) {
   this.name = "ValueError";
   this.message = "Incorrect value  " + value;
   this.value = value;
-  
+
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, this.constructor);
   } else {
@@ -68,16 +68,16 @@ WeightedList.prototype._generateList = function() {
 
   for (var i = 0; i < arr.length; i++) {
     this[arr[i]] = this[arr[i]] === undefined ? 1 : this[arr[i]] + 1;
-      
+
     this._total++;
   }
-  
+
 }
 
 WeightedList.prototype.getRandomKey = function() {
   if (this._total < 1)
     throw new EmptyListError();
-  
+
   var num = Math.random();
   var lowerBound = 0;
   for (var key in this) {
@@ -85,7 +85,7 @@ WeightedList.prototype.getRandomKey = function() {
       if (num < lowerBound + this[key] / this._total) {
         return key;
       }
-      
+
       lowerBound += this[key] / this._total;
     }
   }
@@ -129,10 +129,10 @@ OrderedNumberList.prototype._generateList = function(min, max) {
     leftBoundary = +min;
     rightBoundary = +max;
   }
-  
+
   for (var i = leftBoundary; i <= rightBoundary; i++) {
     this[i] = this[i] === undefined ? 1 : this[i] + 1;
-    
+
     this._total++;
   }
 }
@@ -140,16 +140,16 @@ OrderedNumberList.prototype._generateList = function(min, max) {
 // Word generating function
 function getRandomWord(charList, lengthList) {
   var word = "";
-  
+
   var wordLength = lengthList.getRandomKey();
   lengthList.increaseRank(wordLength);
-  
+
   for (var i = 0; i < wordLength; i++) {
     var char = charList.getRandomKey();
     word += char;
     charList.increaseRank(char);
   }
-  
+
   return word;
 }
 
@@ -159,7 +159,7 @@ function generateText(action, charsAmount, charList, lengthList) {
     var word = getRandomWord(charList, lengthList);
     action(word);
   }
-  
+
   charList.clearRanks();
   lengthList.clearRanks();
 };
@@ -172,7 +172,7 @@ window.onload = function() {
   function typeWord(word) {
       outputTextArea.value += word + " ";
   }
-  
+
   var optionList = {
     "lowercase" : function(word) {
                     outputTextArea.style.cssText = "text-transform: lowercase;";
@@ -190,7 +190,7 @@ window.onload = function() {
       return this[option];
     }
   };
-  
+
   // Creating latin characters list
   var makeLatinCharList = function() {
     var latinCharList = new WeightedList((function() {
@@ -204,11 +204,11 @@ window.onload = function() {
 
       return chars;
   })());
-    
+
   return latinCharList;
 }
-  
-  
+
+
   // Get text length from user input
   var getTextLength = function() {
     var MIN_TEXT_LENGTH = 1;
@@ -216,59 +216,59 @@ window.onload = function() {
 
     var textLengthInput = document.getElementById("input-text-len");
     var textLength = +textLengthInput.value;
-    
+
     if (isNaN(textLength))
       throw new IsNaNError(textLengthInput.value);
     if (!Number.isInteger(textLength))
       throw new ValueError(textLengthInput.value);
     if ((textLength < MIN_TEXT_LENGTH) || (textLength > MAX_TEXT_LENGTH))
       throw new ValueError(textLengthInput.value);
-    
+
     return textLength;
   };
-  
+
   // Get list of possible word lengths
   var getWordLengthList = function() {
     var MIN_WORD_LENGTH = 1;
     var MAX_WORD_LENGTH = 25;
-    
+
     var minLengthInput = document.getElementById("input-min-len");
     var maxLengthInput = document.getElementById("input-max-len");
-    
-    var minLength = minLengthInput.value;
-    var maxLength = maxLengthInput.value;
-    
+
+    var minLength = +minLengthInput.value;
+    var maxLength = +maxLengthInput.value;
+
     if (minLength < MIN_WORD_LENGTH)
       throw new ValueError(minLength);
     if (maxLength > MAX_WORD_LENGTH)
       throw new ValueError(maxLength);
-    
+
     var wordLengthList = new OrderedNumberList(minLength, maxLength);
-    
+
     return wordLengthList;
   }
-  
+
   // Get additional option
   var getOption = function() {
     var selectBox = document.getElementById("select-option");
-    
+
     return selectBox.options[selectBox.selectedIndex].value;
   }
-  
+
   // Make a text
   var makeText = function(textLength, charList, lengthList, option) {
     generateText(optionList.getOptFunction(option), textLength, charList, lengthList);
   }
-  
+
   // Combining things together
   var run = function() {
     var inputs = document.getElementsByTagName("input");
-    
+
     function markInvalidField(value) {
       for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].value === value) {
           inputs[i].style.cssText = "background-color: 	#eb5153";
-          
+
           if (Event.oninput && !inputs[i].oninput) {
             inputs[i].oninput = function me() {
               if (inputs[me.i].hasAttribute("style"))
@@ -286,13 +286,13 @@ window.onload = function() {
         }
       }
     }
-    
+
     try {
       var latinCharList = makeLatinCharList();
       var textLength = getTextLength();
       var lengthList = getWordLengthList();
       var option = getOption();
-      
+
       makeText(textLength, latinCharList, lengthList, option);
     } catch (error) {
        if (error instanceof ValueError) {
@@ -304,8 +304,7 @@ window.onload = function() {
        }
     }
   }
-  
+
   var genTextButton = document.getElementById("button-gen-text");
   genTextButton.onclick = run;
 }
-
