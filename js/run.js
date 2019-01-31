@@ -10,7 +10,8 @@ define(function(require) {
   var makeLatinCharList = getData.makeLatinCharList;
   var getTextLength = getData.getTextLength;
   var getWordLengthList = getData.getWordLengthList;
-  var getOption = getData.getOption;
+  var getWordList = getData.getWordList;
+  var getStyleOption = getData.getStyleOption;
 
   // Require function for setting output text
   var makeText = require('./utils/set_text');
@@ -24,9 +25,16 @@ define(function(require) {
       var latinCharList = makeLatinCharList();
       var textLength = getTextLength();
       var lengthList = getWordLengthList();
-      var option = getOption();
+      var wordList = getWordList();
+      var styleOption = getStyleOption();
 
-      makeText(textLength, latinCharList, lengthList, option);
+      makeText({
+        styleOption : styleOption,
+        textLength : textLength,
+        charList : latinCharList,
+        lengthList : lengthList,
+        wordList : wordList
+      });
     } catch (error) {
        if (error instanceof ValueError) {
          markInvalidField(error.value);

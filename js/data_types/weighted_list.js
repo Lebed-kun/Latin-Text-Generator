@@ -10,19 +10,18 @@ define(function(require) {
   }
 
   WeightedList.prototype._generateList = function() {
-    var arr;
-    if (Array.isArray(arguments[0])) {
-      arr = arguments[0];
+    var collection;
+    if (typeof arguments[0] == 'object') {
+      collection = arguments[0];
     } else {
-      arr = arguments;
+      collection = arguments;
     }
 
-    for (var i = 0; i < arr.length; i++) {
-      this[arr[i]] = this[arr[i]] === undefined ? 1 : this[arr[i]] + 1;
 
+    for (var i = 0; i < collection.length; i++) {
+      this[collection[i]] = this[collection[i]] === undefined ? 1 : this[collection[i]] + 1;
       this._total++;
     }
-
   }
 
   WeightedList.prototype.getRandomKey = function() {
@@ -31,29 +30,38 @@ define(function(require) {
 
     var num = Math.random();
     var lowerBound = 0;
-    for (var key in this) {
-      if (key != "_total") {
-        if (num < lowerBound + this[key] / this._total) {
-          return key;
-        }
 
-        lowerBound += this[key] / this._total;
+    var keys = Object.keys(this);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] != "_total") {
+        if (num < lowerBound + this[keys[i]] / this._total) {
+          return keys[i];
+        }
+        lowerBound += this[keys[i]] / this._total;
       }
     }
+
+    return keys[keys.length - 1];
   };
 
   WeightedList.prototype.increaseRank = function(key) {
     if (key !== undefined && key != "_total") {
-      this[key]++;
+      if (this[key] !== undefined) {
+        this[key]++;
+      } else {
+        this[key] = 1;
+      }
+
       this._total++;
     }
   };
 
   WeightedList.prototype.clearRanks = function() {
-    for (var key in this) {
-      if (key != "_total") {
-        this._total -= this[key] - 1;
-        this[key] = 1;
+    var keys = Object.keys(this);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] != "_total") {
+        this._total -= this[keys[i]] - 1;
+        this[keys[i]] = 1;
       }
     }
   };

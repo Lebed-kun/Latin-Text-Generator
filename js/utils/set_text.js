@@ -11,7 +11,7 @@ define(function(require) {
   }
 
   // Options for words
-  var optionList = {
+  var styleOptionList = {
     "lowercase" : function(word) {
                     outputTextArea.style.cssText = "text-transform: lowercase;";
                     typeWord(word);
@@ -30,9 +30,16 @@ define(function(require) {
   };
 
   // Make a text
-  var makeText = function(textLength, charList, lengthList, option) {
+  var makeText = function(options) {
     outputTextArea.value = "";
-    generateText(optionList.getOptFunction(option), textLength, charList, lengthList);
+    var generateOptions = {
+      action : styleOptionList.getOptFunction(options.styleOption),
+      wordCount : options.textLength,
+      charList : options.charList,
+      lengthList : options.lengthList,
+      wordList : options.wordList
+    };
+    generateText(generateOptions);
   }
 
   return makeText;

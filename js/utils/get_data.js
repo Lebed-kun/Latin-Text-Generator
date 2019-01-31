@@ -7,6 +7,7 @@ define(function(require) {
   //Require lists
   var WeightedList = require('../data_types/weighted_list');
   var OrderedNumberList = require('../data_types/ordered_number_list');
+  var WordList = require('../data_types/word_list');
 
   // Creating latin characters list
   var makeLatinCharList = function() {
@@ -24,6 +25,10 @@ define(function(require) {
 
     return latinCharList;
   };
+
+  var getWordList = function() {
+    return new WordList();
+  }
 
   // Get text length from user input
   var getTextLength = function() {
@@ -78,7 +83,7 @@ define(function(require) {
   };
 
   // Get additional option
-  var getOption = function() {
+  var getStyleOption = function() {
     var selectBox = document.getElementById("select-option");
 
     return selectBox.options[selectBox.selectedIndex].value;
@@ -88,6 +93,7 @@ define(function(require) {
     makeLatinCharList : makeLatinCharList,
     getTextLength : getTextLength,
     getWordLengthList : getWordLengthList,
-    getOption : getOption
+    getWordList : getWordList,
+    getStyleOption : getStyleOption
   }
 });
