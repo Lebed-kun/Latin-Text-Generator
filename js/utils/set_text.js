@@ -1,6 +1,6 @@
 define(function(require) {
   // Require generateText function
-  var generateText = require('./generate_text').generateText;
+  var generateText = require('./generate_text');
 
   // Output text area
   var outputTextArea = document.getElementById("output-text");
@@ -35,7 +35,5 @@ define(function(require) {
     generateText(optionList.getOptFunction(option), textLength, charList, lengthList);
   }
 
-  return {
-    makeText : makeText
-  }
+  return makeText;
 })

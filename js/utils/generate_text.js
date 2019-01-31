@@ -3,9 +3,8 @@ define(function(require) {
   var InvalidArgumentError = require('../errors/value_errors').InvalidArgumentError;
 
   // Require lists
-  var lists = require('../data_types/weighted_list');
-  var WeightedList = lists.WeightedList;
-  var OrderedNumberList = lists.OrderedNumberList;
+  var WeightedList = require('../data_types/weighted_list');
+  var OrderedNumberList = require('../data_types/ordered_number_list');
 
   // Word generating function
   function getRandomWord(charList, lengthList) {
@@ -39,7 +38,5 @@ define(function(require) {
     lengthList.clearRanks();
   };
 
-  return {
-    generateText : generateText
-  }
+  return generateText;
 });

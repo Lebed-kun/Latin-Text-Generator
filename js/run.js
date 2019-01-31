@@ -13,7 +13,7 @@ define(function(require) {
   var getOption = getData.getOption;
 
   // Require function for setting output text
-  var makeText = require('./utils/set_text').makeText;
+  var makeText = require('./utils/set_text');
 
   // Require function for marking inputs with invalid values
   var markInvalidField = require('./utils/mark_invalid_field').markInvalidField;

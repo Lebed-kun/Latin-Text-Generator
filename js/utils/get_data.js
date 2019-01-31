@@ -5,9 +5,8 @@ define(function(require) {
   var IsNaNError = errors.IsNaNError;
 
   //Require lists
-  var lists = require('../data_types/weighted_list');
-  var WeightedList = lists.WeightedList;
-  var OrderedNumberList = lists.OrderedNumberList;
+  var WeightedList = require('../data_types/weighted_list');
+  var OrderedNumberList = require('../data_types/ordered_number_list');
 
   // Creating latin characters list
   var makeLatinCharList = function() {
