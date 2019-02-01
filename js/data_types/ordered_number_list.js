@@ -5,22 +5,6 @@ define(function(require) {
   // Require InvalidArgumentError
   var InvalidArgumentError = require('../errors/value_errors').InvalidArgumentError;
 
-  function countNumbers(min, max) {
-    return Math.abs(max - min + 1);
-  }
-
-  // Weight function
-  function weightNumber(number, min, max) {
-    if ((min <= number) && (number <= max)) {
-      var k = 1 / Math.sqrt(Math.PI);
-      var l = (min + max) / 2;
-      var s = countNumbers(min, max);
-      return s * k * Math.exp(-Math.pow(number - l, 2));
-    } else {
-      return 0;
-    }
-  }
-
   // Number list class
   function OrderedNumberList(min, max) {
     WeightedList.apply(this, arguments);
@@ -45,10 +29,10 @@ define(function(require) {
     }
 
     for (var i = leftBoundary; i <= rightBoundary; i++) {
-      this[i] = weightNumber(i, leftBoundary, rightBoundary);
-    }
+      this[i] = 1;
 
-    this._total = countNumbers(leftBoundary, rightBoundary);
+      this._total++;
+    }
   }
 
   return OrderedNumberList;
