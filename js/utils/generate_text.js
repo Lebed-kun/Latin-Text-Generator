@@ -16,6 +16,7 @@ define(function(require) {
       throw new InvalidArgumentError(lengthList);
 
     var word = wordList.getRandomKey(makeRandomWord, charList, lengthList);
+    lengthList.increaseRank(word.length);
     wordList.increaseRank(word);
 
     for (var i = 0; i < word.length; i++) {

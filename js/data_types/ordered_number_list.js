@@ -29,7 +29,7 @@ define(function(require) {
     }
 
     for (var i = leftBoundary; i <= rightBoundary; i++) {
-      this[i] = 1;
+      this[i] = this[i] === undefined ? 1 : this[i] + 1;
 
       this._total++;
     }
