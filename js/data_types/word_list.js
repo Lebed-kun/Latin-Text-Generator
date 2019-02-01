@@ -20,10 +20,11 @@ define(function(require) {
 
     if (key == '_newWord') {
       var word = makeRandomWord(charList, lengthList);
-      this[word] = 1;
-      this._newWord++;
-      this._total += 2;
-
+      if (!this[word]) {
+        this[word] = 1;
+        this._newWord++;
+        this._total++;
+      }
       return word;
     } else {
       return key;
