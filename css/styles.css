@@ -15,6 +15,10 @@ input, input:focus {
 
 /**/
 
+:root {
+  font-family: 'Roboto', sans-serif;
+}
+
 body {
   background-color: #563c4c;
 }
@@ -42,7 +46,7 @@ form {
 }
 
 .label {
-  font-family: "Seaweed script", sans-serif;
+  /* font-family: "Seaweed script", sans-serif; */
   font-size: 1.2rem;
   color: #c1ad9d;
 }
@@ -120,8 +124,8 @@ input:focus {
   -moz-border-radius: 14px;
   -webkit-border-radius: 14px;
 
-  font-family: "Chewy", sans-serif;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
 #button-gen-text:focus {
