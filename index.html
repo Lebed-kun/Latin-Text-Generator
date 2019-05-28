@@ -9,20 +9,26 @@
     <link href="./css/media-queries.css" rel="stylesheet">
   </head>
   <body>
-    <form name="form-text-gen">
+    <form name="form-text-gen" id="form-text-gen">
       <div class="input-container">
         <span class="label">Text length (up to 10K words)</span>
-        <input id="input-text-len" type="text" maxlength="5">
+        <input id="input-text-len" type="text" maxlength="5"
+        data-required data-validator="number" data-min-value="1"
+        data-max-value="10000">
       </div>
 
       <div class="input-container">
         <div class="input-inline">
           <span class="label">Minimum word length</span>
-          <input id="input-min-len" type="text" maxlength="2">
+          <input id="input-min-len" type="text" maxlength="2"
+          data-required data-validator="number" data-min-value="1"
+          data-max-value="25">
         </div>
         <div class="input-inline">
           <span class="label">Maximum word length</span>
-          <input id="input-max-len" type="text" maxlength="2">
+          <input id="input-max-len" type="text" maxlength="2"
+          data-required data-validator="number" data-min-value="1"
+          data-max-value="25">
         </div>
       </div>
 
@@ -35,7 +41,7 @@
         </select>
       </div>
 
-      <button id="button-gen-text" type="button">Generate text</button>
+      <button id="button-gen-text" type="submit">Generate text</button>
       <textarea id="output-text" readonly>
       </textarea>
     </form>

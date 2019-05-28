@@ -9,6 +9,9 @@ define(function(require) {
   var OrderedNumberList = require('../data_types/ordered_number_list');
   var WordList = require('../data_types/word_list');
 
+  // Require in range function
+  var inRange = require('./utils').inRange;
+
   // Creating latin characters list
   var makeLatinCharList = function() {
       var latinCharList = new WeightedList((function() {
@@ -71,10 +74,12 @@ define(function(require) {
     if (isNaN(maxLength))
       throw new IsNaNError(maxLengthInput.value);
 
-    if (minLength < MIN_WORD_LENGTH)
+    if (!inRange(minLength, MIN_WORD_LENGTH, MAX_WORD_LENGTH)) {
       throw new ValueError(minLengthInput.value);
-    if (maxLength > MAX_WORD_LENGTH)
+    }
+    if (!inRange(maxLength, MIN_WORD_LENGTH, MAX_WORD_LENGTH)) {
       throw new ValueError(maxLengthInput.value);
+    }
 
     // Make new list of word lengths
     var wordLengthList = new OrderedNumberList(minLength, maxLength);

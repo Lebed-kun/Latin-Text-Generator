@@ -157,3 +157,7 @@ input:focus {
   border: 2px solid #6a5f58;
   background-color: #ba7958;
 }
+
+.input-error {
+  background-color: #eb5153;
+}

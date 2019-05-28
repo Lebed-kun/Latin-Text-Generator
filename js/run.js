@@ -16,8 +16,13 @@ define(function(require) {
   // Require function for setting output text
   var makeText = require('./utils/set_text');
 
-  // Require function for marking inputs with invalid values
-  var markInvalidField = require('./utils/mark_invalid_field').markInvalidField;
+  // Require function for validating form and validate form
+  var validateForm = require('./utils/validateForm');
+  validateForm({
+    formId : 'form-text-gen',
+    inputErrorClass : 'input-error',
+    formInvalidClass : 'form-invalid'
+  });
 
   // Runs tasks for text generation
   var run = function() {
@@ -37,9 +42,9 @@ define(function(require) {
       });
     } catch (error) {
        if (error instanceof ValueError) {
-         markInvalidField(error.value);
+         console.log(error.stack);
        } else if (error instanceof EmptyListError)  {
-          console.log("Error in function latinCharList : " + error);
+          console.log(error.stack);
        } else {
          throw error;
        }
