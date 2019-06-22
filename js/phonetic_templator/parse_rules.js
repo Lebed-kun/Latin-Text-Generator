@@ -1,23 +1,26 @@
 define(function(require) {
     var { LEFT_BRACE } = require('./constants');
+    var WeightedList = require('../data_types/weighted_list');
 
-    var consonants = [
+    var consonants = new WeightedList([
         'p', 'b', 't', 'd', 'k', 'g',
         'f', 'v', 's', 'z', 'h',
-        'm', 'n', 'r', 'l', 'j'
-    ];
-    var vowels = [
+        'm', 'n', 'r', 'l', 'j', 'w'
+    ]);
+    var vowels = new WeightedList([
         'a', 'i', 'u', 'e', 'o'
-    ];
+    ]);
 
     var wildcards = {
         'C' : function() {
-            let id = Math.floor(Math.random() * consonants.length);
-            return consonants[id];
+            let consonant = consonants.getRandomKey();
+            consonants.increaseRank(consonant);
+            return consonant;
         },
         'V' : function() {
-            let id = Math.floor(Math.random() * vowels.length);
-            return vowels[id];
+            let vowel = vowels.getRandomKey();
+            vowels.increaseRank(vowel);
+            return vowel;
         }
     }
 
