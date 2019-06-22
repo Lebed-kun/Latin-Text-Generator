@@ -16,34 +16,38 @@
  */
 
 var lexer = function(lexems, rules) {
-    return function(str) {
-      let remString = str;
-      let outputLexems = [];
-      
-      while (remString.length > 0) {
-        for (let lex in lexems) {
-          remString = remString.trim();
+  return function(str) {
+    let remString = str;
+    let outputLexems = [];
+    
+    while (remString.length > 0) {
+      for (let lex in lexems) {
+        remString = remString.trim();
+        
+        let regex = new RegExp('^' + lex);
+        let match = remString.match(regex);
+        
+        if (match) {
+          let token = Object.create(lexems[lex]);
+          token.value = match[0];
           
-          let regex = new RegExp('^' + lex);
-          let match = remString.match(regex);
-          
-          if (match) {
-            let token = Object.create(lexems[lex]);
-            token.value = match[0];
-            
-            for (let i = 0; rules && i < rules.length; i++) {
-              rules[i](token, outputLexems);
-            }
-            
-            outputLexems.push(token);
-            remString = remString.replace(regex, '');
-            break;
+          for (let i = 0; rules && i < rules.length; i++) {
+            rules[i](token, outputLexems);
           }
+          
+          outputLexems.push(token);
+          remString = remString.replace(regex, '');
+          break;
+        } else {
+          let id = str.indexOf(remString);
+          throw new Error('Invalid character ' + remString[0] +
+          ' at ' + id);
         }
       }
-      
-      return outputLexems;
     }
+    
+    return outputLexems;
+  }
 }
 
 module.exports = lexer;
