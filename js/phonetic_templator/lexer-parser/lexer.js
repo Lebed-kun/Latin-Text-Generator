@@ -39,10 +39,6 @@ define(function() {
             outputLexems.push(token);
             remString = remString.replace(regex, '');
             break;
-          } else {
-            let id = str.indexOf(remString);
-            throw new Error('Invalid character ' + remString[0] +
-            ' at ' + id);
           }
         }
       }

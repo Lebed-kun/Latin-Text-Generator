@@ -35,8 +35,7 @@ define(function(require) {
     var generateOptions = {
       action : styleOptionList.getOptFunction(options.styleOption),
       wordCount : options.textLength,
-      charList : options.charList,
-      lengthList : options.lengthList,
+      templateList : options.templateList,
       wordList : options.wordList
     };
     generateText(generateOptions);

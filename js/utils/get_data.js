@@ -5,32 +5,20 @@ define(function(require) {
   var IsNaNError = errors.IsNaNError;
 
   //Require lists
-  var WeightedList = require('../data_types/weighted_list');
-  var OrderedNumberList = require('../data_types/ordered_number_list');
   var WordList = require('../data_types/word_list');
-
-  // Require in range function
-  var inRange = require('./utils').inRange;
-
-  // Creating latin characters list
-  var makeLatinCharList = function() {
-      var latinCharList = new WeightedList((function() {
-        var LETTER_A = 97;
-        var LETTER_Z = 122;
-
-        var chars = [];
-        for (var i = LETTER_A; i <= LETTER_Z; i++) {
-          chars.push(String.fromCharCode(i));
-        }
-
-        return chars;
-    })());
-
-    return latinCharList;
-  };
+  var WeightedList = require('../data_types/weighted_list');
 
   var getWordList = function() {
     return new WordList();
+  }
+
+  // Get phonetic template list
+  var getTemplateList = function() {
+    return new WeightedList([
+      'CV', 'CVC', 'CVCV',
+      'CVCCV', 'CVCVCV', 'CCVCV',
+      'CVCCVCV', 'CCVCVCV'
+    ])
   }
 
   // Get text length from user input
@@ -52,41 +40,6 @@ define(function(require) {
     return textLength;
   };
 
-  // Get list of possible word lengths
-  var getWordLengthList = function() {
-    var MIN_WORD_LENGTH = 1;
-    var MAX_WORD_LENGTH = 25;
-
-    var minLengthInput = document.getElementById("input-min-len");
-    var maxLengthInput = document.getElementById("input-max-len");
-
-    var minLength = +minLengthInput.value;
-    var maxLength = +maxLengthInput.value;
-
-    // Error conditions
-    if (!minLengthInput.value)
-      throw new ValueError(minLengthInput.value);
-    if (!maxLengthInput.value)
-      throw new ValueError(maxLengthInput.value);
-
-    if (isNaN(minLength))
-      throw new IsNaNError(minLengthInput.value);
-    if (isNaN(maxLength))
-      throw new IsNaNError(maxLengthInput.value);
-
-    if (!inRange(minLength, MIN_WORD_LENGTH, MAX_WORD_LENGTH)) {
-      throw new ValueError(minLengthInput.value);
-    }
-    if (!inRange(maxLength, MIN_WORD_LENGTH, MAX_WORD_LENGTH)) {
-      throw new ValueError(maxLengthInput.value);
-    }
-
-    // Make new list of word lengths
-    var wordLengthList = new OrderedNumberList(minLength, maxLength);
-
-    return wordLengthList;
-  };
-
   // Get additional option
   var getStyleOption = function() {
     var selectBox = document.getElementById("select-option");
@@ -95,9 +48,8 @@ define(function(require) {
   };
 
   return {
-    makeLatinCharList : makeLatinCharList,
     getTextLength : getTextLength,
-    getWordLengthList : getWordLengthList,
+    getTemplateList : getTemplateList,
     getWordList : getWordList,
     getStyleOption : getStyleOption
   }

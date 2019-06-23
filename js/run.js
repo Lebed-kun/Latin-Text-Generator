@@ -7,9 +7,8 @@ define(function(require) {
 
   // Require functions that returns data for text generation
   var getData = require('./utils/get_data');
-  var makeLatinCharList = getData.makeLatinCharList;
   var getTextLength = getData.getTextLength;
-  var getWordLengthList = getData.getWordLengthList;
+  var getTemplateList = getData.getTemplateList;
   var getWordList = getData.getWordList;
   var getStyleOption = getData.getStyleOption;
 
@@ -27,17 +26,15 @@ define(function(require) {
   // Runs tasks for text generation
   var run = function() {
     try {
-      var latinCharList = makeLatinCharList();
       var textLength = getTextLength();
-      var lengthList = getWordLengthList();
+      var templateList = getTemplateList();
       var wordList = getWordList();
       var styleOption = getStyleOption();
 
       makeText({
         styleOption : styleOption,
         textLength : textLength,
-        charList : latinCharList,
-        lengthList : lengthList,
+        templateList : templateList,
         wordList : wordList
       });
     } catch (error) {

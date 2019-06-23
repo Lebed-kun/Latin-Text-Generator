@@ -15,11 +15,11 @@ define(function(require) {
     this._total++;
   }
 
-  WordList.prototype.getRandomKey = function(makeRandomWord, charList, lengthList) {
+  WordList.prototype.getRandomKey = function(makeRandomWord, templateList) {
     var key = WeightedList.prototype.getRandomKey.call(this);
 
     if (key == '_newWord') {
-      var word = makeRandomWord(charList, lengthList);
+      var word = makeRandomWord(templateList);
       if (!this[word]) {
         this[word] = 1;
         this._newWord++;

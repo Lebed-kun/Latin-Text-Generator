@@ -4,43 +4,31 @@ define(function(require) {
 
   // Require lists
   var WeightedList = require('../data_types/weighted_list');
-  var OrderedNumberList = require('../data_types/ordered_number_list');
   var WordList = require('../data_types/word_list');
 
-  function getRandomWord(wordList, charList, lengthList) {
+  // Require phonetic template parser
+  var phParser = require('../phonetic_templator/fullParser');
+
+  function getRandomWord(wordList, templateList) {
     if(!(wordList instanceof WordList))
-      throw new InvalidArgumentError(charList);
-    if(!(charList instanceof WeightedList))
-      throw new InvalidArgumentError(charList);
-    if (!(lengthList instanceof OrderedNumberList))
-      throw new InvalidArgumentError(lengthList);
+      throw new InvalidArgumentError(wordList);
+    if (!(templateList instanceof WeightedList))
+      throw new InvalidArgumentError(templateList);
 
-    var word = wordList.getRandomKey(makeRandomWord, charList, lengthList);
-    lengthList.increaseRank(word.length);
+    var word = wordList.getRandomKey(makeRandomWord, templateList);
     wordList.increaseRank(word);
-
-    for (var i = 0; i < word.length; i++) {
-      charList.increaseRank(word[i]);
-    }
 
     return word;
   }
 
   // Word generating function
-  function makeRandomWord(charList, lengthList) {
-    if(!(charList instanceof WeightedList))
-      throw new InvalidArgumentError(charList);
-    if (!(lengthList instanceof OrderedNumberList))
-      throw new InvalidArgumentError(lengthList);
+  function makeRandomWord(templateList) {
+    if (!(templateList instanceof WeightedList))
+      throw new InvalidArgumentError(templateList);
 
-    var word = "";
-
-    var wordLength = lengthList.getRandomKey();
-
-    for (var i = 0; i < wordLength; i++) {
-      var char = charList.getRandomKey();
-      word += char;
-    }
+    var template = templateList.getRandomKey();
+    templateList.increaseRank(template);
+    var word = phParser(template);
 
     return word;
   }
@@ -49,13 +37,12 @@ define(function(require) {
   // (action, wordCount, charList, lengthList, wordList)
   function generateText(options) {
     for (var i = 0; i < options.wordCount; i++) {
-      var word = getRandomWord(options.wordList, options.charList, options.lengthList);
+      var word = getRandomWord(options.wordList, options.templateList);
       options.action(word);
     }
 
     options.wordList.clearRanks();
-    options.charList.clearRanks();
-    options.lengthList.clearRanks();
+    options.templateList.clearRanks();
   };
 
   return generateText;
