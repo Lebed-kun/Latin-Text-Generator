@@ -4,18 +4,18 @@ define(function(require) {
     // Parser
     var parser = require('./lexer-parser/parser');
 
-    // Lexemes
-    var lexemes = require('./lex_rules');
+    // LEXEMES
+    var LEXEMES = require('./lex_rules');
 
-    // Wildcards (operators) for parsing machine
-    var wildcards = require('./parse_rules').wildcards;
+    // WILDCARDS (operators) for parsing machine
+    var WILDCARDS = require('./parse_rules').WILDCARDS;
     // Parsing rules
-    var parseRules = require('./parse_rules').rules;
+    var PARSE_RULES = require('./parse_rules').rules;
 
     // Custom lexer
-    var phonemeLexer = lexer(lexemes);
+    var phonemeLexer = lexer(LEXEMES);
     // Custom parser
-    var phonemeParser = parser(parseRules, wildcards);
+    var phonemeParser = parser(PARSE_RULES, WILDCARDS);
 
     return function(str) {
         let tokens = phonemeLexer(str);

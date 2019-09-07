@@ -1,7 +1,7 @@
 define(function(require) {
     var { PHONEME, WILDCARD, LEFT_BRACE, RIGHT_BRACE } = require('./constants');
 
-    var lexemes = {
+    var LEXEMES = {
         '[a-z]' : {
             type : PHONEME
         },
@@ -16,5 +16,5 @@ define(function(require) {
         }
     };
 
-    return lexemes;
+    return LEXEMES;
 })

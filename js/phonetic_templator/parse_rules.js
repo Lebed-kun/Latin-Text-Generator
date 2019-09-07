@@ -2,30 +2,30 @@ define(function(require) {
     var { LEFT_BRACE } = require('./constants');
     var WeightedList = require('../data_types/weighted_list');
 
-    var consonants = new WeightedList([
+    var CONSONANTS = new WeightedList([
         'p', 'b', 't', 'd', 'k', 'g',
         'f', 'v', 's', 'z', 'h',
         'm', 'n', 'r', 'l', 'j', 'w'
     ]);
-    var vowels = new WeightedList([
+    var VOWELS = new WeightedList([
         'a', 'i', 'u', 'e', 'o'
     ]);
 
-    var wildcards = {
+    var WILDCARDS = {
         'C' : function() {
-            let consonant = consonants.getRandomKey();
-            consonants.increaseRank(consonant);
+            let consonant = CONSONANTS.getRandomKey();
+            CONSONANTS.increaseRank(consonant);
             return consonant;
         },
         'V' : function() {
-            let vowel = vowels.getRandomKey();
-            vowels.increaseRank(vowel);
+            let vowel = VOWELS.getRandomKey();
+            VOWELS.increaseRank(vowel);
             return vowel;
         }
     }
 
-    var parseRules = {
-        PHONEME : function(wildcards, opStack, resStack) {
+    var PARSE_RULES = {
+        PHONEME : function(WILDCARDS, opStack, resStack) {
             return function(token) {
                 let cond = opStack.length === 0 || 
                 opStack[opStack.length - 1].type === LEFT_BRACE &&
@@ -42,14 +42,14 @@ define(function(require) {
             }
         },
 
-        WILDCARD : function(wildcards, opStack, resStack) {
+        WILDCARD : function(WILDCARDS, opStack, resStack) {
             return function(token) {
                 let cond = opStack.length === 0 || 
                 opStack[opStack.length - 1].type === LEFT_BRACE &&
                     !opStack[opStack.length - 1].ignoring;
 
                 if (cond) {
-                    let phoneme = wildcards[token.value]();
+                    let phoneme = WILDCARDS[token.value]();
 
                     if (!resStack[0]) {
                         resStack.push(phoneme);
@@ -60,7 +60,7 @@ define(function(require) {
             }
         },
 
-        LEFT_BRACE : function(wildcards, opStack, resStack) {
+        LEFT_BRACE : function(WILDCARDS, opStack, resStack) {
             return function(token) {
                 let cond = opStack.length > 0 &&
                     opStack[opStack.length - 1].type === LEFT_BRACE &&
@@ -76,7 +76,7 @@ define(function(require) {
             }
         },
 
-        RIGHT_BRACE : function(wildcards, opStack, resStack) {
+        RIGHT_BRACE : function(WILDCARDS, opStack, resStack) {
             return function() {
                 opStack.pop();
             }
@@ -84,7 +84,7 @@ define(function(require) {
     }
 
     return {
-        wildcards,
-        rules : parseRules
+        WILDCARDS,
+        rules : PARSE_RULES
     }
 });
